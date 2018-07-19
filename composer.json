@@ -1,0 +1,16 @@
+{
+    "name": "sensi/codein",
+    "description": "Code analysis library",
+    "type": "library",
+    "license": "none",
+    "authors": [
+        {
+            "name": "Marijn Ophorst",
+            "email": "marijn@sensimedia.nl"
+        }
+    ],
+    "require": {},
+    "bin": [
+        "bin/codein"
+    ]
+}
