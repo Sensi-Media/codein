@@ -125,5 +125,4 @@ function walk($dir)
 }
 
 walk($dir);
-die();
 
