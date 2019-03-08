@@ -12,5 +12,10 @@
     "require": {},
     "bin": [
         "bin/codein"
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "Sensi\\Codein\\": "src/"
+        }
+    }
 }
