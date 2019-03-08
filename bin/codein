@@ -1,6 +1,8 @@
 #!/usr/bin/php
 <?php
 
+namespace Sensi\Codein;
+
 $dir = $argv[1];
 $dir = realpath($dir);
 
