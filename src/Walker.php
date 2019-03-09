@@ -9,10 +9,10 @@ class Walker
 
     public function __construct()
     {
-        $this->namespaces = new Namespaces("$dir/$entry");
+        $this->namespaces = new Namespaces;
     }
 
-    public function walk($dir)
+    public function walk(string $dir) : void
     {
         $d = dir($dir);
         while (false !== ($entry = $d->read())) {
@@ -26,7 +26,10 @@ class Walker
             if (!preg_match("@\.php$@", $entry)) {
                 continue;
             }
-            $this->namespaces->check("$dir/$entry");
+            foreach ($this->namespaces->check("$dir/$entry") as $error) {
+                if ($error instanceof Error) {
+                }
+            }
         }
     }
 }
