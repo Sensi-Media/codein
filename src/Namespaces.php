@@ -78,7 +78,7 @@ class Namespaces
 
     public function argumentTypeHint(string $namespace) : bool
     {
-        if (preg_match_all('@function \w+\((.*?)\)@ms', $this->code, $matches)) {
+        if (preg_match_all('@function \w*\((.*?)\)@ms', $this->code, $matches)) {
             foreach ($matches[1] as $args) {
                 $ns = preg_split('@,\s*@', $args);
                 foreach ($ns as $one) {
