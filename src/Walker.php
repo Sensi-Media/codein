@@ -2,6 +2,8 @@
 
 namespace Sensi\Codein;
 
+use Ansi;
+
 class Walker
 {
     /** @var Sensi\Codein\Namespaces */
@@ -26,8 +28,15 @@ class Walker
             if (!preg_match("@\.php$@", $entry)) {
                 continue;
             }
-            foreach ($this->namespaces->check("$dir/$entry") as $error) {
-                if ($error instanceof Error) {
+            foreach ([
+                $this->namespaces,
+            ] as $errors) {
+                foreach ($errors->check("$dir/$entry") as $error) {
+                    if ($error instanceof Error) {
+                        fwrite(STDERR, Ansi::tagsToColors('<red>'.$error->getMessage().'</red>'));
+                    } elseif ($error instanceof Notice) {
+                        fwrite(STDOUT, Ansi::tagsToColors('<blue>'.$error->getMessage().'</blue>'));
+                    }
                 }
             }
         }
