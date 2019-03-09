@@ -9,7 +9,9 @@
             "email": "marijn@sensimedia.nl"
         }
     ],
-    "require": {},
+    "require": {
+        "simoneast/simple-ansi-colors": "^1.0"
+    },
     "bin": [
         "bin/codein"
     ],
