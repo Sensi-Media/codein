@@ -61,8 +61,8 @@ class Namespaces
                 || $this->classname($namespace)
                 || $this->instanceOfCheck($namespace)
                 || $this->extendsClass($namespace)
-                || $this->implementsInterface($namespacde)
-                || $this->catchesException($nanespace)
+                || $this->implementsInterface($namespace)
+                || $this->catchesException($namespace)
             ) {
                 continue;
             }
