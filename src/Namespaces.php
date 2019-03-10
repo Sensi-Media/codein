@@ -4,17 +4,11 @@ namespace Sensi\Codein;
 
 use Generator;
 
-class Namespaces
+class Namespaces extends Check
 {
-    /** @var string */
-    protected $file;
-    /** @var string */
-    protected $code;
-
     public function check(string $file) : Generator
     {
-        $this->file = $file;
-        $this->code = file_get_contents(preg_replace("@/\*(.*?)\*/@ms", '', $this->file));
+        parent::initialize($file);
         if (!preg_match_all("@^use (.*?);$@ms", $this->code, $matches)) {
             return;
         }
@@ -38,7 +32,7 @@ class Namespaces
         }
         foreach ($namespaces as $name => $count) {
             if ($count > 1) {
-                yield new Error("Namespace $name appers $count times in {$this->file}");
+                yield "<red>Namespace <darkRed>$name <red>appers $count times in <darkRed>{$this->file}";
             }
         }
         foreach ($nss as $i => $namespace) {
@@ -66,7 +60,7 @@ class Namespaces
             ) {
                 continue;
             }
-            yield new Error("Unused: $namespace in {$this->file}");
+            yield "<red>Unused: <darkRed>$namespace <red>in <darkRed>{$this->file}";
         }
         return;
     }
