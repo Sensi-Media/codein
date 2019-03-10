@@ -16,15 +16,16 @@ class Walker
         $this->doccomments = new Doccomments;
     }
 
-    public function walk(string $dir) : void
+    public function walk(string $dir) : int
     {
+        $errs = 0;
         $d = dir($dir);
         while (false !== ($entry = $d->read())) {
             if ($entry{0} == '.') {
                 continue;
             }
             if (is_dir("$dir/$entry")) {
-                $this->walk("$dir/$entry");
+                $errs += $this->walk("$dir/$entry");
                 continue;
             }
             if (!preg_match("@\.php$@", $entry)) {
@@ -33,12 +34,15 @@ class Walker
             foreach ([
                 $this->namespaces,
                 $this->typehints,
+                $this->doccomments,
             ] as $errors) {
                 foreach ($errors->check("$dir/$entry") as $error) {
+                    ++$errs;
                     fwrite(STDOUT, Ansi::tagsToColors("$error<reset>\n"));
                 }
             }
         }
+        return $errs;
     }
 }
 
