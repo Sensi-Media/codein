@@ -14,7 +14,7 @@ $walker = new Walker;
 fwrite(STDOUT, "\n");
 $errs = $walker->walk($dir);
 if (!$errs) {
-    fwrite(STDOUT, Ansi::tagsToColors("<green>Everything okay!</reset>\n"));
+    fwrite(STDOUT, Ansi::tagsToColors("<green>Everything okay!<reset>\n"));
 } else {
     fwrite(STDOUT, Ansi::tagsToColors("\n<reset>Found <bold>$errs <reset>code smells.\n"));
 }
