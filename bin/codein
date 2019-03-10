@@ -3,11 +3,20 @@
 
 namespace Sensi\Codein;
 
+use Ansi;
+
 require_once 'vendor/autoload.php';
 
 $dir = $argv[1];
 $dir = realpath($dir);
 
 $walker = new Walker;
-$walker->walk($dir);
+fwrite(STDOUT, "\n");
+$errs = $walker->walk($dir);
+if (!$errs) {
+    fwrite(STDOUT, Ansi::tagsToColors("<green>Everything okay!</reset>\n"));
+} else {
+    fwrite(STDOUT, Ansi::tagsToColors("\n<reset>Found <bold>$errs <reset>code smells.\n"));
+}
+fwrite(STDOUT, "\n");
 
