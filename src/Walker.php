@@ -12,6 +12,8 @@ class Walker
     public function __construct()
     {
         $this->namespaces = new Namespaces;
+        $this->typehints = new Typehints;
+        $this->doccomments = new Doccomments;
     }
 
     public function walk(string $dir) : void
@@ -30,13 +32,10 @@ class Walker
             }
             foreach ([
                 $this->namespaces,
+                $this->typehints,
             ] as $errors) {
                 foreach ($errors->check("$dir/$entry") as $error) {
-                    if ($error instanceof Error) {
-                        fwrite(STDERR, Ansi::tagsToColors("<red>$error</red>\n"));
-                    } elseif ($error instanceof Notice) {
-                        fwrite(STDOUT, Ansi::tagsToColors("<blue>$error</blue>\n"));
-                    }
+                    fwrite(STDOUT, Ansi::tagsToColors("$error<reset>\n"));
                 }
             }
         }
