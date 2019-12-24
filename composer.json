@@ -1,8 +1,8 @@
 {
-    "name": "sensi/codein",
+    "name": "sensimedia/codein",
     "description": "Code analysis library",
     "type": "library",
-    "license": "none",
+    "license": "proprietary",
     "authors": [
         {
             "name": "Marijn Ophorst",
