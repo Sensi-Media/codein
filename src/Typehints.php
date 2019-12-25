@@ -7,9 +7,9 @@ use ReflectionClass;
 
 class Typehints extends Check
 {
-    public function check(string $code) : Generator
+    public function check(string $file) : Generator
     {
-        if (!($class = $this->extractClass($code))) {
+        if (!($class = $this->extractClass($file))) {
             return;
         }
         $reflection = new ReflectionClass($class);
@@ -23,6 +23,8 @@ class Typehints extends Check
             if ($method->getFileName() != $reflection->getFileName()) {
                 continue;
             }
+            // TODO: if this class extends another class, specifying these
+            // might be illegal according to PHP. Check that!
             if (!$method->getReturnType()) {
                 yield "<red>Method <darkRed>{$method->name} <red>specifies no return type in <darkRed>$file";
             }
