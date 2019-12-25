@@ -7,9 +7,9 @@ use ReflectionClass;
 
 class Typehints extends Check
 {
-    public function check(string $file) : Generator
+    public function check(string $code) : Generator
     {
-        if (!($class = $this->extractClass($file))) {
+        if (!($class = $this->extractClass($code))) {
             return;
         }
         $reflection = new ReflectionClass($class);
