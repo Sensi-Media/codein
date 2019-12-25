@@ -6,9 +6,9 @@ use Generator;
 
 class Namespaces extends Check
 {
-    public function check(string $file) : Generator
+    public function check(string $code) : Generator
     {
-        parent::initialize($file);
+        parent::initialize($code);
         if (!preg_match_all("@^use (.*?);$@ms", $this->code, $matches)) {
             return;
         }
@@ -32,7 +32,7 @@ class Namespaces extends Check
         }
         foreach ($namespaces as $name => $count) {
             if ($count > 1) {
-                yield "<red>Namespace <darkRed>$name <red>appers $count times in <darkRed>{$this->file}";
+                yield "<red>Namespace <darkRed>$name <red>appears $count times in <darkRed>{$this->file}";
             }
         }
         foreach ($nss as $i => $namespace) {
