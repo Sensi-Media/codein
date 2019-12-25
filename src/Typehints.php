@@ -5,8 +5,17 @@ namespace Sensi\Codein;
 use Generator;
 use ReflectionClass;
 
+/**
+ * Check if all methods typehint their parameters and return types.
+ */
 class Typehints extends Check
 {
+    /**
+     * Run the check.
+     *
+     * @param string $file
+     * @return Generator
+     */
     public function check(string $file) : Generator
     {
         if (!($class = $this->extractClass($file))) {
