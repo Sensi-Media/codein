@@ -4,8 +4,18 @@ namespace Sensi\Codein;
 
 use Generator;
 
+/**
+ * Check for namespace use. Avoid dead wood, and group related namespaces
+ * (e.g. Some\Vendor\{ Foo, Bar }).
+ */
 class Namespaces extends Check
 {
+    /**
+     * Run the check.
+     *
+     * @param string $file
+     * @return Generator
+     */
     public function check(string $file) : Generator
     {
         parent::initialize($file);
@@ -65,11 +75,23 @@ class Namespaces extends Check
         return;
     }
 
+    /**
+     * Check if the namespace is instantiated as a class anywhere.
+     *
+     * @param string $namespace
+     * @return bool
+     */
     private function instantiated(string $namespace) : bool
     {
         return (bool)preg_match("@new $namespace@", $this->code);
     }
 
+    /**
+     * Check if the namespace is used as an argument type hint anywhere.
+     *
+     * @param string $namespace
+     * @return bool
+     */
     private function argumentTypeHint(string $namespace) : bool
     {
         if (preg_match_all('@function \w*\((.*?)\)@ms', $this->code, $matches)) {
@@ -85,31 +107,67 @@ class Namespaces extends Check
         return false;
     }
 
+    /**
+     * Check if the namespace is used as a trait.
+     *
+     * @param string $namespace
+     * @return bool
+     */
     private function traitUsed(string $namespace) : bool
     {
         return (bool)preg_match("@use $namespace@", $this->code);
     }
 
+    /**
+     * Check if the namespace appears as a return type hint.
+     *
+     * @param string $namespace
+     * @return bool
+     */
     private function returnTypeHint(string $namespace) : bool
     {
         return (bool)preg_match("@:\?? $namespace@", $this->code);
     }
 
+    /**
+     * Check if the namespace is used as a static classname.
+     *
+     * @param string $namespace
+     * @return bool
+     */
     private function classname(string $namespace) : bool
     {
         return (bool)preg_match("@$namespace(\\\\(\w|\\\\)+)?::@m", $this->code);
     }
 
+    /**
+     * Check if the namespace is used in an instanceof check.
+     *
+     * @param string $namespace
+     * @return bool
+     */
     private function instanceOfCheck(string $namespace) : bool
     {
         return (bool)preg_match("@instanceof $namespace@", $this->code);
     }
 
+    /**
+     * Check if the namespace is used as a parent class.
+     *
+     * @param string $namespace
+     * @return bool
+     */
     private function extendsClass(string $namespace) : bool
     {
         return (bool)preg_match("@extends $namespace@", $this->code);
     }
 
+    /**
+     * Check if the namespace is an interface that was implemented.
+     *
+     * @param string $namespace
+     * @return bool
+     */
     private function implementsInterface(string $namespace) : bool
     {
         if (preg_match("@implements (.*?)$@m", $this->code, $match)) {
@@ -123,6 +181,12 @@ class Namespaces extends Check
         return false;
     }
 
+    /**
+     * Check if the namespace is used to catch an exception.
+     *
+     * @param string $namespace
+     * @return bool
+     */
     private function catchesException(string $namespace) : bool
     {
         return (bool)preg_match("@} catch \($namespace @", $this->code);
