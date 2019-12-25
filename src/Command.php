@@ -67,7 +67,7 @@ class Command extends Cliff\Command
                 continue;
             }
             foreach ($checks as $errors) {
-                foreach ($errors->check("$dir/$entry") as $error) {
+                foreach ($errors->check(file_get_contents("$dir/$entry")) as $error) {
                     ++$errs;
                     fwrite(STDOUT, Ansi::tagsToColors("$error<reset>\n"));
                 }
