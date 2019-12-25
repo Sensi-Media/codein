@@ -5,6 +5,9 @@ namespace Sensi\Codein;
 use Monolyth\Cliff;
 use Ansi;
 
+/**
+ * The main sensi\codein command to check for code smells.
+ */
 class Command extends Cliff\Command
 {
     /** @var bool */
