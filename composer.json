@@ -21,6 +21,11 @@
             "Sensi\\Codein\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Sensi\\Codein\\Test\\": "tests/files/"
+        }
+    },
     "require-dev": {
         "toast/unit": "^2.1",
         "gentry/gentry": "^0.13.16",
