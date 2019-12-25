@@ -1,4 +1,4 @@
 {
     "src": "src",
-    "tests": "tests"
+    "tests": "tests/toast"
 }
