@@ -19,7 +19,14 @@ class Command extends Cliff\Command
     /** @var bool */
     public $all = false;
 
-    public function __invoke(string $dir)
+    /**
+     * For the specified $dir, traverse all PHP files and subdirectories to
+     * analyze the code contained.
+     *
+     * @param string $dir
+     * @return void
+     */
+    public function __invoke(string $dir) : void
     {
         $errs = $this->walk($dir);
         if (isset($errs)) {
@@ -34,6 +41,13 @@ class Command extends Cliff\Command
         }
     }
 
+    /**
+     * Recursively walk and check directories.
+     *
+     * @param string $dir
+     * @return int|null The number of errors found, or null if no tests were
+     *  defined (see the options for the command).
+     */
     private function walk(string $dir) :? int
     {
         static $checks;
