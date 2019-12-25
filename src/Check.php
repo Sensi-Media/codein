@@ -7,11 +7,15 @@ use Generator;
 abstract class Check
 {
     /** @var string */
+    protected $file;
+
+    /** @var string */
     protected $code;
 
-    protected function initialize(string $code) : void
+    protected function initialize(string $file) : void
     {
-        $this->code = preg_replace("@/\*(.*?)\*/@ms", '', $code);
+        $this->file = $file;
+        $this->code = preg_replace("@/\*(.*?)\*/@ms", '', file_get_contents($file));
     }
 
     protected function extractClass(string $file) :? string
