@@ -4,6 +4,9 @@ namespace Sensi\Codein;
 
 use Generator;
 
+/**
+ * Abstract base check our other checks should extend.
+ */
 abstract class Check
 {
     /** @var string */
@@ -12,12 +15,23 @@ abstract class Check
     /** @var string */
     protected $code;
 
+    /**
+     * @param string $file
+     * @return void
+     */
     protected function initialize(string $file) : void
     {
         $this->file = $file;
         $this->code = preg_replace("@/\*(.*?)\*/@ms", '', file_get_contents($file));
     }
 
+    /**
+     * Extract a classname from the given file.
+     *
+     * @param string $file
+     * @return string|null The classname, or null if the file does not contain
+     *  a class.
+     */
     protected function extractClass(string $file) :? string
     {
         $this->initialize($file);
@@ -35,6 +49,12 @@ abstract class Check
         return isset($namespace) ? "$namespace\\$classname" : $classname;
     }
 
-    public abstract function check(string $code) : Generator;
+    /**
+     * Do the actual check. Checks should implement this.
+     *
+     * @param string $file
+     * @return Generator
+     */
+    public abstract function check(string $file) : Generator;
 }
 
