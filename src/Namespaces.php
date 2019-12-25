@@ -6,9 +6,9 @@ use Generator;
 
 class Namespaces extends Check
 {
-    public function check(string $code) : Generator
+    public function check(string $file) : Generator
     {
-        parent::initialize($code);
+        parent::initialize($file);
         if (!preg_match_all("@^use (.*?);$@ms", $this->code, $matches)) {
             return;
         }
@@ -65,12 +65,12 @@ class Namespaces extends Check
         return;
     }
 
-    public function instantiated(string $namespace) : bool
+    private function instantiated(string $namespace) : bool
     {
         return (bool)preg_match("@new $namespace@", $this->code);
     }
 
-    public function argumentTypeHint(string $namespace) : bool
+    private function argumentTypeHint(string $namespace) : bool
     {
         if (preg_match_all('@function \w*\((.*?)\)@ms', $this->code, $matches)) {
             foreach ($matches[1] as $args) {
@@ -85,32 +85,32 @@ class Namespaces extends Check
         return false;
     }
 
-    public function traitUsed(string $namespace) : bool
+    private function traitUsed(string $namespace) : bool
     {
         return (bool)preg_match("@use $namespace@", $this->code);
     }
 
-    public function returnTypeHint(string $namespace) : bool
+    private function returnTypeHint(string $namespace) : bool
     {
         return (bool)preg_match("@:\?? $namespace@", $this->code);
     }
 
-    public function classname(string $namespace) : bool
+    private function classname(string $namespace) : bool
     {
         return (bool)preg_match("@$namespace(\\\\(\w|\\\\)+)?::@m", $this->code);
     }
 
-    public function instanceOfCheck(string $namespace) : bool
+    private function instanceOfCheck(string $namespace) : bool
     {
         return (bool)preg_match("@instanceof $namespace@", $this->code);
     }
 
-    public function extendsClass(string $namespace) : bool
+    private function extendsClass(string $namespace) : bool
     {
         return (bool)preg_match("@extends $namespace@", $this->code);
     }
 
-    public function implementsInterface(string $namespace) : bool
+    private function implementsInterface(string $namespace) : bool
     {
         if (preg_match("@implements (.*?)$@m", $this->code, $match)) {
             $ns = preg_split('@,\s*@', $match[1]);
@@ -123,7 +123,7 @@ class Namespaces extends Check
         return false;
     }
 
-    public function catchesException(string $namespace) : bool
+    private function catchesException(string $namespace) : bool
     {
         return (bool)preg_match("@} catch \($namespace @", $this->code);
     }
