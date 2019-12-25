@@ -34,7 +34,7 @@ class Command extends Cliff\Command
         }
     }
 
-    public function walk(string $dir) :? int
+    private function walk(string $dir) :? int
     {
         static $checks;
         if (!isset($checks)) {
