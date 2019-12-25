@@ -20,5 +20,8 @@
         "psr-4": {
             "Sensi\\Codein\\": "src/"
         }
+    },
+    "require-dev": {
+        "toast/unit": "^2.1"
     }
 }
