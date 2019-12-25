@@ -28,7 +28,7 @@ abstract class Check
         if (!isset($classname)) {
             return null;
         }
-        return "$namespace\\$classname";
+        return isset($namespace) ? "$namespace\\$classname" : $classname;
     }
 
     public abstract function check(string $code) : Generator;
