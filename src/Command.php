@@ -34,6 +34,15 @@ class Command extends Cliff\Command
      */
     public function __invoke(string $dir) : void
     {
+        if (file_exists(getcwd().'/codein.json')) {
+            $config = json_decode(file_get_contents(getcwd().'/codein.json'));
+            if (isset($config->bootstrap)) {
+                $files = is_array($config->bootstrap) ? $config->bootstrap : [$config->bootstrap];
+                foreach ($files as $file) {
+                    require_once getcwd()."/$file";
+                }
+            }
+        }
         $errs = $this->walk($dir);
         if (isset($errs)) {
             if (!$errs) {
