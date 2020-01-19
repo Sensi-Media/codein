@@ -37,6 +37,11 @@ class Doccomments extends Check
                 yield "<red>Method <darkRed>$class::{$method->name} <red>is missing doccomment in <darkRed>{$this->file}";
             }
         }
+        foreach ($reflection->getProperties() as $property) {
+            if (!$property->getDocComment()) {
+                yield "<red>Property <darkRed>$class->{$property->name} <red>is missing doccomment in <darkRed>{$this->file}";
+            }
+        }
     }
 }
 
