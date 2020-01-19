@@ -2,23 +2,25 @@
 
 use Gentry\Gentry\Wrapper;
 
-/** Testsuite for Sensi\Codein\Doccomments */
+/** Test existence of doccomments */
 return function () : Generator {
     $object = Wrapper::createObject(Sensi\Codein\Doccomments::class);
 
-    /** Missing doccomments on both a class and a method are flagged as errors */
+    /** Missing doccomments on a class, method AND property are flagged as errors */
     yield function () use ($object) {
         $file = dirname(__DIR__).'/files/Doccomment.php';
         $i = 0;
         foreach ($object->check($file) as $error) {
             if (!$i) {
                 assert(strpos($error, 'Class') !== false);
-            } else {
+            } elseif ($i == 1) {
                 assert(strpos($error, 'Method') !== false);
+            } else {
+                assert(strpos($error, 'Property') !== false);
             }
             ++$i;
         }
-        assert($i === 2);
+        assert($i === 3);
     };
 
 };
