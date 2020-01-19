@@ -2,10 +2,10 @@
 
 use Gentry\Gentry\Wrapper;
 
-/** Testsuite for Sensi\Codein\Typehints */
+/** Test if all type hints are correctly set (where possible) */
 return function () : Generator {
     $object = Wrapper::createObject(Sensi\Codein\Typehints::class);
-    /** check yields $result instanceof Generator */
+    /** Check type hints for parameters and return values */
     yield function () use ($object) {
         $file = dirname(__DIR__).'/files/Typehints.php';
         $errors = [];
