@@ -30,9 +30,13 @@ class Properties extends Check
         $args = [];
         if ($constructor = $reflection->getConstructor()) {
             foreach ($constructor->getParameters() as $parameter) {
-                fwrite(STDOUT, Ansi::tagsToColors("<darkGreen>$class<green> constructor argument <darkGreen>\${$parameter->name}<green> value: <reset>"));
-                $argument = trim(fgets(STDIN));
-                $args[] = strlen($argument) ? eval("return $argument;") : null;
+                if ($parameter->isDefaultValueAvailable()) {
+                    $args[] = $parameter->getDefaultValue();
+                } else {
+                    fwrite(STDOUT, Ansi::tagsToColors("<darkGreen>$class<green> constructor argument <darkGreen>\${$parameter->name}<green> value: <reset>"));
+                    $argument = trim(fgets(STDIN));
+                    $args[] = strlen($argument) ? eval("return $argument;") : null;
+                }
             }
         }
         $instance = $reflection->newInstance(...$args);
