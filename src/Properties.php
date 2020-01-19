@@ -32,7 +32,7 @@ class Properties extends Check
             foreach ($constructor->getParameters() as $parameter) {
                 fwrite(STDOUT, Ansi::tagsToColors("<darkGreen>$class<green> constructor argument <darkGreen>\${$parameter->name}<green> value: <reset>"));
                 $argument = trim(fgets(STDIN));
-                $args[] = strlen($argument) ? $argument : null;
+                $args[] = strlen($argument) ? eval("return $argument;") : null;
             }
         }
         $instance = $reflection->newInstance(...$args);
