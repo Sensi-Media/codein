@@ -20,6 +20,9 @@ class Command extends Cliff\Command
     public $doccomments = false;
 
     /** @var bool */
+    public $undeclaredProperties = false;
+
+    /** @var bool */
     public $all = false;
 
     /**
@@ -64,6 +67,9 @@ class Command extends Cliff\Command
             }
             if ($this->doccomments || $this->all) {
                 $checks[] = new Doccomments;
+            }
+            if ($this->undeclaredProperties || $this->all) {
+                $checks[] = new Properties;
             }
         }
         if (!$checks) {
