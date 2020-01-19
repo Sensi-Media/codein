@@ -2,7 +2,7 @@
 
 use Gentry\Gentry\Wrapper;
 
-/** Testsuite for Sensi\Codein\Namespaces */
+/** Test usage of namespaces */
 return function () : Generator {
     $object = Wrapper::createObject(Sensi\Codein\Namespaces::class);
 
