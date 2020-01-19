@@ -4,6 +4,13 @@ namespace Sensi\Codein\Test;
 
 class Doccomment
 {
+    /**
+     * This property has a doccomment, so it isn't flagged.
+     */
+    public $foo;
+
+    public $bar;
+
     public function bar()
     {
     }
