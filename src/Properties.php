@@ -42,7 +42,7 @@ class Properties extends Check
         }
         foreach ($instance as $property => $value) {
             if (!isset($properties[$property])) {
-                yield "<red>Property <darkRed>$class->{$property->name} <red>is added on the fly in <darkRed>{$this->file}";
+                yield "<red>Property <darkRed>$class->$property <red>is added on the fly in <darkRed>{$this->file}";
             }
         }
     }
